@@ -1,0 +1,44 @@
+apply plugin: 'java'
+apply plugin: 'eclipse-wtp'
+apply plugin: 'war'
+
+sourceCompatibility = 1.8                               // for Java 1.8
+targetCompatibility = 1.8
+
+compileJava.options.encoding = 'UTF-8'
+
+jar {
+    baseName = 'iris-springmvc-example'             // jar file name
+    version =  '1.0.0'                              // application version
+}
+
+//프로젝트를 빌드하고 나면 프로젝트 정보도 같이 지워지는데, Gradle 프로젝트임을 인식 시켜준다
+//프로젝트 우클릭시 [run as] - [gradle build]가 표시되도록 해준다
+eclipse {
+    project.natures "org.springsource.ide.eclipse.gradle.core.nature"
+    wtp {
+        facet {
+            facet name: 'jst.web', version: '3.1' // Servlet Spec version 지정
+            facet name: 'jst.java', version: '1.8' //Java version 지정
+        }
+    }
+}
+
+
+dependencies {    
+
+    compile 'org.springframework:spring-context:4.3.17.RELEASE'
+    compile "org.springframework:spring-webmvc:4.3.17.RELEASE"    
+	compileOnly 'javax.servlet:javax.servlet-api:4.0.+'
+
+    // Use JUnit test framework
+    testImplementation 'junit:junit:4.12'
+}
+
+// In this section you declare where to find the dependencies of your project
+repositories {
+    // Use jcenter for resolving your dependencies.
+    // You can declare any Maven/Ivy/file repository here.
+    jcenter()
+    mavenCentral()
+}
